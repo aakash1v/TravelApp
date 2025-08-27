@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+{% block title %} Search your Journey {% endblock %}
+
+{% block content %}
+
+<div class="max-w-2xl my-2 mx-auto p-6 bg-white shadow rounded-xl">
+  <form method="get" class="flex flex-col md:flex-row gap-4">
+    <div>
+      <label class="block text-semibold md:text-xl">Source</label>
+      <input list="sources" name="source" value="{{ form.source.value|default_if_none:'' }}"
+             class="bg-violet-100 rounded-md">
+      <datalist id="sources">
+        {% for s in sources %}
+          <option value="{{ s }}" class="bg-violet-950 text-white">
+        {% endfor %}
+      </datalist>
+    </div>
+
+    <div>
+      <label class="block text-semibold md:text-xl">Destination</label>
+      <input list="destinations" name="destination" value="{{ form.destination.value|default_if_none:'' }}"
+             class="bg-violet-100 rounded-md">
+      <datalist id="destinations">
+        {% for d in destinations %}
+          <option value="{{ d }}">
+        {% endfor %}
+      </datalist>
+    </div>
+
+    <button type="submit" class="px-4 py-2 bg-violet-500 hover:bg-violet-700 text-white rounded-full">Search</button>
+  </form>
+</div>
+
+{% if travels %}
+  <div class="mt-6 space-y-4">
+    {% for t in travels %}
+      <div class="p-4 bg-gray-100 rounded-xl shadow text-black">
+
+        <h2 class="font-semibold">{{ t.get_type_display }}: {{ t.source }} → {{ t.destination }}</h2>
+
+        <p>Departure: {{ t.departure_time }} | Arrival: {{ t.arrival_time }}</p>
+        <p>Available Seats: {{ t.available_seats }} | Price: ₹{{ t.price }}</p>
+
+        <form method="post" action="{% url 'core:book_travel' t.id %}">
+          {% csrf_token %}
+          <label>No of Seats:
+            <input type="number" name="number_of_seats" min="1" max="{{ t.available_seats }}">
+          </label>
+          <button type="submit"
+                  class="py-1 px-3 text-lg bg-teal-500 text-white rounded-xl">
+                  Book
+          </button>
+        </form>
+
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+<div class="mt-6 space-y-4">
+  <h1>Sorry no transport available..</h1>
+</div>
+
+
+{% endif %}
+
+{% endblock %}
+

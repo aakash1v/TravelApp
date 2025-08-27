@@ -14,13 +14,13 @@
     <span class="text-3xl tracking-widest">TravelApp</span>
       </a>
 
-    <ul class="flex items-center gap-2">
+    <ul class="flex justify-start flex-wrap items-center gap-2">
         <li><a href="{% url 'booking:bookings' %}" class="md:text-xl btn hover:text-white bg-teal-500 hover:bg-teal-700 px-4 py-2 rounded-xl">Bookings</a></li>
 
-        <li><a href="#" class="md:text-xl btn hover:text-white bg-teal-500 hover:bg-teal-700 px-4 py-2 rounded-xl">Explore</a></li>
+        <li><a href="{% url 'core:dashboard' %}" class="md:text-xl btn hover:text-white bg-teal-500 hover:bg-teal-700 px-4 py-2 rounded-xl">Explore</a></li>
         {% if request.user.is_authenticated %}
 
-        <li><a href="#" class="md:text-xl btn hover:text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-xl" >Account</a></li>
+        <li><a href="{% url 'core:account' %}" class="md:text-xl btn hover:text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-xl" >Account</a></li>
 
         <li>    
           <form action="{% url 'core:logout' %}" method="post">
@@ -40,6 +40,12 @@
     </nav>
 
 
-    <div class="px-6">{% block content %} {% endblock %}</div>
+    <div class="px-6">{% block content %} 
+      <div class="flex flex-col gap-5 items-center justify-center h-screen">
+        <h1 class="text-center text-6xl tracking-widest text-stone-500">Welcome To Our Travel App</h1>
+        <a href="{% url 'core:dashboard' %}" class="btn rounded-full bg-violet-500 hover:bg-violet-700 text-white text-lg px-8 py-4">Click to continue..</a>
+
+      </div>
+{% endblock %}</div>
   </body>
 </html>

@@ -1,0 +1,57 @@
+{% extends 'core/base.html' %} 
+{% block title %}My account{% endblock %} 
+{% block content %}
+<div class="bg-violet-100 flex flex-col items-center gap-4 py-4">
+  <h1 class="text-2xl font-semibold text-violet-400">Account Details</h1>
+
+
+    <form action="." method="post" class="md:w-3/6 w-11/12">
+      {% csrf_token %}
+      <!-- {{form.as_p}} -->
+
+      <div class="mb-3">
+        <label for="" class="inline-block mb-2">First Name</label> <br />
+        {{form.first_name}}
+      </div>
+
+      <div class="mb-3">
+        <label for="" class="inline-block mb-2">Last Name</label> <br />
+        {{form.last_name}}
+      </div>
+
+      <div class="mb-3">
+        <label for="" class="inline-block mb-2">Username</label> <br />
+        {{form.username}}
+      </div>
+
+      <div class="mb-3">
+        <label for="" class="inline-block mb-2">Email</label> <br />
+        {{form.email}}
+      </div>
+
+      <div class="mb-3">
+        <label for="" class="inline-block mb-2">Password</label> <br />
+        {{form.password1}}
+      </div>
+
+      <div class="mb-3">
+        <label for="" class="inline-block mb-2">Confirm Password</label> <br />
+        {{form.password2}}
+      </div>
+
+      {% if form.errors or form.non_field_errors %}
+      <div class="mb-3 p-6 bg-red-100 rounded-xl">
+        {% for field in form %} {{field.errors}} {% endfor %}
+        {{form.non_form_errors}}
+      </div>
+
+      {% endif %}
+
+      <button
+        class="py-4 px-8 text-lg bg-teal-500 hover:text-teal-700 rounded-xl text-white"
+      >
+       Edit 
+      </button>
+    </form>
+</div>
+{% endblock %}

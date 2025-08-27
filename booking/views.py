@@ -18,7 +18,7 @@ def get_travel_list(req):
 
 
 def get_all_bookings(req):
-    bookings = Booking.objects.all()
+    bookings = Booking.objects.filter(customer=req.user)
     return render(req, 'booking/index.html', {'bookings': bookings})
 
 

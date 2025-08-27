@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title%}Welcome {% endblock %} | TravelApp</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <nav class="flex justify-between text-violet-50 bg-violet-500 px-6 py-4 flex-col md:flex-row gap-5">
+      <a href="{% url 'core:dashboard' %}">
+
+    <span class="text-3xl tracking-widest">TravelApp</span>
+      </a>
+
+    <ul class="flex items-center gap-2">
+        <li><a href="{% url 'booking:bookings' %}" class="md:text-xl btn hover:text-white bg-teal-500 hover:bg-teal-700 px-4 py-2 rounded-xl">Bookings</a></li>
+
+        <li><a href="#" class="md:text-xl btn hover:text-white bg-teal-500 hover:bg-teal-700 px-4 py-2 rounded-xl">Explore</a></li>
+        {% if request.user.is_authenticated %}
+
+        <li><a href="#" class="md:text-xl btn hover:text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-xl" >Account</a></li>
+
+        <li>    
+          <form action="{% url 'core:logout' %}" method="post">
+            {% csrf_token %}
+          <button type="submit" class="md:text-xl btn hover:text-white bg-red-500 hover:bg-red-700 px-4 py-2 rounded-xl">Logout</button>
+          </form>
+
+        </li>
+
+        {% else %}
+
+        <li><a href="{% url 'core:login' %}" class="md:text-xl btn hover:text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-xl">Login</a></li>
+
+        <li><a href="{% url 'core:signup' %}" class="md:text-xl btn hover:text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-xl">Sign Up</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+
+
+    <div class="px-6">{% block content %} {% endblock %}</div>
+  </body>
+</html>

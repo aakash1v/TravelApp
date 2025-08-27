@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% block title %} Dashboard {% endblock %}
+
+{% block content %}
+<div class="border-black border border-rose-300 my-2">
+  <h1 class="text-2xl font-semibold">Travel Options</h1>
+
+  <div class="mx-8 my-2 p-2 rounded-sm flex md:flex-row flex-col gap-5 h-28 ">
+  {% for option  in travel_options %}
+    <a href="{% url 'core:travel_details' option.type %}" class="bg-violet-800 text-white font-semibold text-3xl flex-1 flex items-center justify-center cursor-pointer">{{option.type}}</a>
+  {% endfor %}
+  </div>
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+
+{% block title %} All bookings {% endblock %}
+
+
+{% block content %}
+<div class="flex flex-col">
+    <h1 class="text-purple-500 text-2xl text-center my-2">Your all bookings</h1>
+    {% for booking in bookings %}
+    <div class="px-2 md:px-10 py-2 rounded-lg my-2
+              {% if booking.status == 'CONFIRMED' %}
+                bg-green-600 
+              {% elif booking.status == 'PENDING' %}
+                bg-yellow-500 font-semibold
+              {% elif booking.status == 'CANCELLED' %}
+                bg-red-600 font-semibold
+              {% endif %}
+        ">
+
+        <div class="flex justify-between ">
+
+            <p>
+              Booking - {{ booking.id }}
+              <span
+                class="font-semibold text-violet-700"
+              >
+                {{ booking.status }}
+              </span>
+            </p>
+            <span class="bg-yellow-700 text-white px-2 py-1 rounded-full font-semibold">Amount: {{booking.total_price}}</span>
+        </div>
+        <p>You are travelling form 
+            <strong>{{booking.travel_option.source}}({{booking.travel_option.departure_time}})</strong> to <strong>{{booking.travel_option.destination}}({{booking.travel_option.arrival_time}})</strong>
+                by {{booking.travel_option.type}}
+
+        </p>
+        </div>
+    {% endfor %}
+
+</div>
+
+{% endblock%}

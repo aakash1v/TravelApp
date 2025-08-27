@@ -1,6 +1,8 @@
 from asyncio import wait
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.contrib.auth.views import login_required
+
 
 """
 we have two options to convert model obj to json --> 
@@ -17,8 +19,7 @@ def get_travel_list(req):
     })
 
 
+@login_required
 def get_all_bookings(req):
     bookings = Booking.objects.filter(customer=req.user)
     return render(req, 'booking/index.html', {'bookings': bookings})
-
-

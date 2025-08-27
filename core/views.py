@@ -3,6 +3,7 @@ from django.contrib.auth.views import login_required
 from django.shortcuts import get_object_or_404, render, redirect
 from booking.models import TravelOption
 from .forms import BookingForm, SignupForm, TravelSearchForm
+from django.contrib.auth.views import login_required
 
 
 def signup(req):
@@ -29,6 +30,7 @@ def account(req):
     return render(req, 'core/account.html', {'form': form})
 
 
+@login_required
 def dashboard(req):
     travel_options = TravelOption.objects.all()
     return render(req, 'core/dashboard.html', {'travel_options': travel_options})
@@ -80,7 +82,8 @@ def travel_booking(req, travel_id):
             travel.available_seats -= booking.number_of_seats
             travel.save()
 
-            return redirect("booking:bookings")  # redirect to a bookings list page
+            # redirect to a bookings list page
+            return redirect("booking:bookings")
     else:
         form = BookingForm()
 

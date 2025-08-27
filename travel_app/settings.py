@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-wp7j%e$^epp_nndfdi5hg3=iv2gg)minyqp#=%(8xjqzop5b^y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['p4.project1.space']
 
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/"
@@ -125,3 +126,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# If you also use your own static folder (inside apps/templates), keep this
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]

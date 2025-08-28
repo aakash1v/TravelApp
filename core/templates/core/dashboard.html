@@ -3,11 +3,11 @@
 
 {% block content %}
 <div class="my-2">
-  <h1 class="text-2xl font-semibold text-stone-800">Travel Options</h1>
+  <h1 class="text-3xl font-semibold text-stone-800 tracking-widest text-center mb-5 text-blue-950">Travel Options</h1>
 
-  <div class="mx-8 my-2 p-2 rounded-sm flex md:flex-row flex-col gap-5 h-28 ">
+  <div class="mx-8 my-10 p-2 rounded-sm flex flex-col justify-center items-center gap-5 h-28 ">
   {% for option  in travel_options %}
-    <a href="{% url 'core:travel_search' option.type %}" class="bg-violet-800 hover:bg-violet-500 text-white font-semibold text-3xl flex-1 flex items-center justify-center cursor-pointer">{{option.type}}</a>
+    <a href="{% url 'core:travel_search' option.type %}" class="bg-violet-800 hover:bg-violet-500 text-white font-semibold text-3xl flex items-center justify-center cursor-pointer rounded-full md:w-1/4 px-4 py-2">{{option.type}}</a>
   {% endfor %}
   </div>
 

@@ -38,18 +38,18 @@ def dashboard(req):
 
 def travel_search(req, type):
     form = TravelSearchForm(req.GET or None)
-    travels = None
+    travels = TravelOption.objects.all()
+    travel_results = None
 
     if form.is_valid():
         source = form.cleaned_data["source"]
         destination = form.cleaned_data["destination"]
-        travels = TravelOption.objects.filter(
+        travel_results = travels.filter(
             source__icontains=source,
             destination__icontains=destination,
             type=type
         )
 
-    # ✅ Get unique values for dropdown
     sources = TravelOption.objects.values_list("source", flat=True).distinct()
     destinations = TravelOption.objects.values_list(
         "destination", flat=True).distinct()
@@ -57,6 +57,7 @@ def travel_search(req, type):
     return render(req, "core/travel_search.html", {
         "travel_type": type,
         "travels": travels,
+        "travel_results": travel_results,
         "form": form,
         "sources": sources,
         "destinations": destinations,
@@ -70,19 +71,18 @@ def travel_booking(req, travel_id):
     if req.method == "POST":
         form = BookingForm(req.POST)
         if form.is_valid():
-            booking = form.save(commit=False)   # don't save yet
-            booking.customer = req.user         # ✅ set logged-in user
-            booking.travel_option = travel      # ✅ set travel option
+            booking = form.save(commit=False)
+            booking.customer = req.user
+            booking.travel_option = travel
             booking.total_price = (
                 booking.number_of_seats * travel.price
-            )                                   # ✅ calculate total
+            )
             booking.save()
 
             # Reduce available seats
             travel.available_seats -= booking.number_of_seats
             travel.save()
 
-            # redirect to a bookings list page
             return redirect("booking:bookings")
     else:
         form = BookingForm()

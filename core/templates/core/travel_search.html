@@ -1,6 +1,20 @@
 {% extends 'core/base.html' %}
 {% block title %} Search your Journey {% endblock %}
 
+{% block additional_css %} 
+
+<style>
+@keyframes marquee {
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+.animate-marquee {
+  display: flex;
+  animation: marquee 30s linear infinite;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
 <div class="max-w-2xl my-2 mx-auto p-6 bg-white shadow rounded-xl">
@@ -31,9 +45,30 @@
   </form>
 </div>
 
-{% if travels %}
-  <div class="mt-6 space-y-4">
+<!-- app travel options available ... --> 
+<div class="w-full overflow-hidden bg-white py-4">
+  <div class="flex gap-6 animate-marquee">
     {% for t in travels %}
+      <div class="min-w-[280px] p-4 bg-gray-100 rounded-xl shadow-lg text-black flex-shrink-0 hover:scale-105 transition-transform duration-300">
+        <h2 class="font-semibold text-lg text-blue-900">
+          {{ t.get_type_display }}: {{ t.source }} → {{ t.destination }}
+        </h2>
+        <p class="text-sm text-gray-700">
+          Departure: {{ t.departure_time }} | Arrival: {{ t.arrival_time }}
+        </p>
+        <p class="text-sm text-gray-700">
+          Seats: <span class="font-medium">{{ t.available_seats }}</span> | 
+          Price: <span class="font-semibold text-green-700">₹{{ t.price }}</span>
+        </p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+{% if travel_results %}
+  <div class="mt-6 space-y-4">
+    {% for t in travel_results %}
       <div class="p-4 bg-gray-100 rounded-xl shadow text-black">
 
         <h2 class="font-semibold">{{ t.get_type_display }}: {{ t.source }} → {{ t.destination }}</h2>
@@ -57,7 +92,7 @@
   </div>
 {% else %}
 <div class="mt-6 space-y-4">
-  <h1>Sorry no transport available..</h1>
+  <h1 class="text-center font-semibold bg-violet-900 rounded-full text-violet-50">Sorry transport are available for specific location ..</h1>
 </div>
 
 
